@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.ITestContext;
@@ -18,6 +19,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import resources.Base;
+
 
 public class MyStore extends Base implements ITestListener{
 	private WebDriver driver;
@@ -35,11 +37,11 @@ public class MyStore extends Base implements ITestListener{
 	
 	
 	@Test
-	public void addShoppingCart() 
+	public void addShoppingCart() throws InterruptedException 
 	{
 		mystorePageModel.getbtntopMenu().click();
 		mystorePageModel.getbtnsubcategories().click();
-		String[] itemsNeeded= {pro.getProperty("product1"),pro.getProperty("product")};
+		String[] itemsNeeded= {"Faded Short Sleeve T-shirts","Blouse"};
 		addItems(driver,itemsNeeded);
 		mystorePageModel.getbtnViewCart().click();
 		
@@ -50,11 +52,11 @@ public class MyStore extends Base implements ITestListener{
 		mystorePageModel.getbtnProceedonAddressPage().click();
 		mystorePageModel.getcbTermsandCond().click();
 		mystorePageModel.getbtnProceedonShippingPage().click();
-		//mystorePageModel.getbtnPaymentbyWire().click();
-		//mystorePageModel.getbtnConfirmOrder().click();
+		mystorePageModel.getbtnPaymentbyWire().click();
+		mystorePageModel.getbtnConfirmOrder().click();
 	}
 	
-	/*@Test
+	@Test
 	public void previousOrders()
 	{
 		String formattedName;
@@ -106,7 +108,7 @@ public class MyStore extends Base implements ITestListener{
 			String colorfinal=color[0].trim();
 			Assert.assertTrue(colorfinal.equals(pro.getProperty("color")), "Color matched");
 		}
-	}*/
+	}
    
 	
 	@AfterMethod
@@ -161,11 +163,11 @@ public class MyStore extends Base implements ITestListener{
 		
 	}
 	
-	/*@AfterMethod
+	@AfterMethod
 	public void logOut()
 	{
         driver.close();
         driver.quit();
-	}*/
+	}
 }
 

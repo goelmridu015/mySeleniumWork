@@ -29,11 +29,11 @@ public class Base {
 	
 	private static WebDriver driver;
 	
-	public static HomePageModel homePageModel; 
-	public static LoginPageModel loginPageModel;
-	public static MyStorePageModel mystorePageModel;
-	public static Properties pro;
-	public static FileInputStream fis;
+	public  static HomePageModel homePageModel; 
+	public  static LoginPageModel loginPageModel;
+	public  static MyStorePageModel mystorePageModel;
+	public  static Properties pro;
+	public  static FileInputStream fis;
 	
 	public static OrderPageModel orderPageModel;
 	
@@ -95,46 +95,48 @@ public class Base {
 		loginPageModel.getbtnLogin().click();
 	}
 	
-	public void addItems(WebDriver driver,String[] itemsNeeded)
+	public void addItems(WebDriver driver,String[] itemsNeeded) throws InterruptedException
 	{
 		WebDriverWait wait2 = new WebDriverWait(driver, 100);
     	Actions action = new Actions(driver);
 	    int j=0;
-	    //WebElement productgrid = driver.findElement(By.cssSelector("body.category.category-4.category-tops.hide-right-column.lang_en:nth-child(2) div.columns-container div.container div.row:nth-child(3) div.center_column.col-xs-12.col-sm-9 > ul.product_list.grid.row:nth-child(5)"));
-	    //List<WebElement> products = productgrid.findElements(By.tagName("li"));
+	 
 	    List<WebElement> products=mystorePageModel.getproductList();
 	    
 	    for(int i=0;i<products.size();i++)
 	    {
 	    	String[] name=products.get(i).getText().split("\n");
-	    	String formattedName=name[0];
+	    	String formattedName ="";
+	    	    	
+	    	for ( int k =0 ;k <name.length; k++ ) 
+	    	{
+	    		if ( name[k].equalsIgnoreCase(pro.getProperty("product1") ) || (name[k].equalsIgnoreCase(pro.getProperty("product2")) ) ) 
+	    		{
+	    			formattedName=name[k];
+	    		}	    		
+	    	}
+	    	 
 	    	List<String> itemsNeededList = Arrays.asList(itemsNeeded);
+	    	 
 	    	if(itemsNeededList.contains(formattedName))
 	    	{
-	    		j++;
+	    		j++;	    		
+	    		String mainpage = driver.getWindowHandle();  // Main Handle
 	    		wait2.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@title='"+formattedName+"']/img[@title='"+formattedName+"']"))));
 	    		
 	    		WebElement myElement = driver.findElement(By.xpath("//*[@title='"+formattedName+"']/img[@title='"+formattedName+"']"));
 	    		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", myElement);
-	    		    		
+	    		
 	    		wait2.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(@data-id-product,'"+j+"')]//span[contains(text(),'Add to cart')]"))));
 	    		action.moveToElement(driver.findElement(By.xpath("//*[contains(@data-id-product,'"+j+"')]//span[contains(text(),'Add to cart')]"))).click().build().perform();
-        	
-	    		String mainpage=driver.getWindowHandle();  // Main Handle
-	    		
+	    	
 	    		for(String winHandle : driver.getWindowHandles())
 	    		{
-	    			
 	    			driver.switchTo().window(winHandle);
 	    			wait2.until(ExpectedConditions.elementToBeClickable(mystorePageModel.getbtnContinueShopping()));
 		    		mystorePageModel.getbtnContinueShopping().click();
 		    		driver.switchTo().window(mainpage);
 	    		}	
-	    		
-	    		if(j==itemsNeeded.length)
-	    		{
-	    			break;
-	    		}
 	    	}
 	    }
 	}

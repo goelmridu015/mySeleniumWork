@@ -19,7 +19,7 @@ public class MyStorePageModel
 	@FindBy(xpath="//div[@id='subcategories']//a[@title='Tops']")
 	private WebElement btnsubcategories;
 	
-	@FindBy(xpath="//ul[@class='product_list grid row']//li")
+	@FindBy(xpath="//div[@class='product-container']")	
 	private List<WebElement> productList;
 	
 	@FindBy(xpath="//*[@title='$$']/img[@title='$$']")
@@ -29,8 +29,7 @@ public class MyStorePageModel
 	@FindBy(xpath="//span[contains(text(),'Add to cart')]")
 	private WebElement btnAddtoCart;
 	
-    ////span[@class='continue btn btn-default button exclusive-medium']/span
-	@FindBy(xpath="//span[@class='continue btn btn-default button exclusive-medium']/span")
+    @FindBy(xpath="//span[@class='continue btn btn-default button exclusive-medium']/span")
 	private WebElement btnContinueShopping;
 	
 	@FindBy(xpath="//a[contains(@title,'View my shopping cart')]")

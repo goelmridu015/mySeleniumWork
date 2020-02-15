@@ -13,7 +13,6 @@ public WebDriver driver;
 	{
 		this.driver=driver;
 	}
-
 	
 	@FindBy(xpath="//*[@id='order-list']//th[2]")
 	private WebElement btnDateOrderList;
